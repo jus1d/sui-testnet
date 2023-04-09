@@ -1,6 +1,6 @@
-import fs from 'fs';
 import consoleStamp from 'console-stamp';
 import axios from 'axios';
+import fs from 'fs';
 
 consoleStamp(console, { format: '(->).yellow :date( HH:MM:ss ).blue.underline' });
 const parseFile = fileName => fs.readFileSync(fileName, "utf8").split('\n').map(str => str.trim()).filter(str => str.length > 10);
@@ -37,8 +37,8 @@ const checkProxyList = async () => {
 }
 
 
-const getRandomProxy = async () => {
-
+const getRandomProxy = async (proxyList) => {
+    return proxyList[Math.floor(Math.random() * proxyList.length)];
 }
 
 
@@ -66,6 +66,37 @@ const checkProxy = async (proxy) => {
     
 }
 
+
+const faucet = async (address, proxy) => {
+    let ip = proxy.split(':')[0];
+    let port = proxy.split(':')[1];
+
+    axios.post('https://faucet.devnet.sui.io/gas', {
+        proxy: {
+            protocol: 'http',
+            host: ip,
+            port: port
+        }
+    }).then(res => {
+        console.log(`\x1b[2m${shortAddress(address)}\x1b[0m proxy: ${proxy}\x1b[0m \x1b[32mfaucet initiated with code: ${res.status}\x1b[0m`);
+    }).catch(err => {
+        console.log(`\x1b[2m${shortAddress(address)}\x1b[0m proxy: ${proxy}\x1b[0m \x1b[31mfaucet error: ${err}`);
+    });
+}
+
+
 (async () => {
-    await checkProxyList();
+
+    let proxyList = parseFile('proxy.txt');
+
+    while (true) {
+        let proxy = await getRandomProxy(proxyList);
+
+        for (let i = 0; i < 3; i++) {
+            await faucet(suiAddress, proxy);
+        }
+
+        await timeout(1);
+    }
+
 })()
