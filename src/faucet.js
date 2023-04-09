@@ -25,7 +25,7 @@ const getRandomDelay = async () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
   
     while (true) {
-      // client.channels.cache.get(faucetChannelId).send(`!faucet ${suiAddress}`);
+      client.channels.cache.get(faucetChannelId).send(`!faucet ${suiAddress}`);
 
       console.log(`faucet initiated to ${shortSuiAddress}`);
 
