@@ -39,6 +39,7 @@ const getDate = () => {
     console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
   
     while (true) {
+      client.channels.cache.get(faucetChannelId).send(`!faucet ${suiAddress}`);
       console.log(`faucet initiated to ${shortSuiAddress}`);
 
       let delay = await getRandomDelay();
