@@ -10,8 +10,9 @@ const timeout = seconds => new Promise(res => setTimeout(res, 1000 * seconds));
 consoleStamp(console, { format: '(->).yellow :date( HH:MM:ss ).blue.underline' });
 
 const faucetChannelId = '1037811694564560966';
+const shortAddress = (address) => `${address.slice(0, 6)}...${address.slice(address.length - 6, address.length)}`;
 const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4';
-const shortSuiAddress = `${suiAddress.slice(0, 6)}...${suiAddress.slice(suiAddress.length - 6, suiAddress.length)}`;
+const shortSuiAddress = shortAddress(suiAddress);
 
 const getRandomDelay = async () => {
   return random.integer(121 * 60, 140 * 60);
