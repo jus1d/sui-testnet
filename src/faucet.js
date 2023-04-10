@@ -3,6 +3,20 @@ import consoleStamp from 'console-stamp';
 import { Random } from "random-js";
 import * as dotenv from 'dotenv';
 
+const reset = "\x1b[0m"
+const dim = "\x1b[2m"
+const underscore = "\x1b[4m"
+const blink = "\x1b[5m"
+const reverse = "\x1b[7m"
+const hidden = "\x1b[8m"
+
+const red = "\x1b[31m"
+const green = "\x1b[32m"
+const yellow = "\x1b[33m"
+const blue = "\x1b[34m"
+const magenta = "\x1b[35m"
+const cyan = "\x1b[36m"
+
 dotenv.config();
 const random = new Random();
 const client = new Client({ checkUpdate: false });
@@ -45,9 +59,10 @@ const getDate = () => {
       let delay = await getRandomDelay();
 
       for (let i = 0; i < delay; i++) {
-        process.stdout.write(`\r\x1b[33m->\x1b[0m \x1b[34m\x1b[4m[${getDate()}]\x1b[0m waiting \x1b[33m${delay - i}\x1b[0m seconds for next request`);
+        process.stdout.write(`\r${yellow}->${reset} ${blue}${underscore}[${getDate()}]${reset} waiting ${yellow}${delay - i}${reset} seconds for next request`);
         await timeout(1);
       }
+      process.stdout.write('\n');
     }
   });
 

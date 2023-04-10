@@ -10,6 +10,20 @@ const shortAddress = (address) => `${address.slice(0, 6)}...${address.slice(addr
 const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4';
 const shortSuiAddress = shortAddress(suiAddress);
 
+const reset = "\x1b[0m"
+const dim = "\x1b[2m"
+const underscore = "\x1b[4m"
+const blink = "\x1b[5m"
+const reverse = "\x1b[7m"
+const hidden = "\x1b[8m"
+
+const red = "\x1b[31m"
+const green = "\x1b[32m"
+const yellow = "\x1b[33m"
+const blue = "\x1b[34m"
+const magenta = "\x1b[35m"
+const cyan = "\x1b[36m"
+
 
 const checkProxyList = async () => {
     const proxies = parseFile('uncheckedProxy.txt');
@@ -29,9 +43,9 @@ const checkProxyList = async () => {
             });
 
             fs.appendFileSync('proxy.txt', `${proxies[i]}\n`);
-            console.log(`\x1b[32msuccess: \x1b[0m${proxies[i]}`);
+            console.log(`${green}success: ${reset}${proxies[i]}`);
         } catch (error) {
-            console.log(`\x1b[31merror: \x1b[0m${proxies[i]}`);
+            console.log(`${red}error: ${reset}${proxies[i]}`);
         }
     }
 }
@@ -78,9 +92,9 @@ const faucet = async (address, proxy) => {
             port: port
         }
     }).then(res => {
-        console.log(`\x1b[2m${shortAddress(address)}\x1b[0m proxy: ${proxy}\x1b[0m \x1b[32mfaucet initiated with code: ${res.status}\x1b[0m`);
+        console.log(`${dim}${shortAddress(address)}${reset} proxy: ${proxy}${reset} ${green}faucet initiated with code: ${res.status}${reset}`);
     }).catch(err => {
-        console.log(`\x1b[2m${shortAddress(address)}\x1b[0m proxy: ${proxy}\x1b[0m \x1b[31mfaucet error: ${err}`);
+        console.log(`${dim}${shortAddress(address)}${reset} proxy: ${proxy}${reset} ${green}faucet error: ${err}`);
     });
 }
 
