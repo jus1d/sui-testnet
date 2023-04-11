@@ -24,13 +24,33 @@ const timeout = seconds => new Promise(res => setTimeout(res, 1000 * seconds));
 consoleStamp(console, { format: '(->).yellow :date( HH:MM:ss ).blue.underline' });
 consoleStamp(process.stdout, { format: '(->).yellow :date( HH:MM:ss ).blue.underline' });
 
-const faucetChannelId = '1037811694564560966';
-const shortAddress = (address) => `${address.slice(0, 6)}...${address.slice(address.length - 6, address.length)}`;
+const faucetChannelIds = [
+  '1037811694564560966',
+  '1093613234084388875'
+];
+const shortAddress = (address) => `${address.slice(0, 5)}..${address.slice(address.length - 5, address.length)}`;
 const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4';
 const shortSuiAddress = shortAddress(suiAddress);
 
 const getRandomDelay = async () => {
   return random.integer(121 * 60, 140 * 60);
+}
+
+const parseDelay = async (delay) => {
+  let delayHours = Math.trunc(delay/3600);
+  let delayMins = Math.trunc((delay - 7200)/60);
+  let delaySecs = delay - 7200 - (delayMins * 60);
+
+  let delayStr = `${delayHours} hrs`;
+
+  if (delayMins != 0) {
+    delayStr += `, ${delayMins} mins`;
+  }
+  if (delaySecs != 0) {
+    delayStr += `, ${delaySecs} secs`;
+  }
+
+  return delayStr;
 }
 
 const getDate = () => {
@@ -50,19 +70,20 @@ const getDate = () => {
 (async () => {
   
   client.on('ready', async () => {
-    console.log(`logged in as ${client.user.username}#${client.user.discriminator}`);
+    console.log(`logged in as ${cyan}${underscore}${client.user.username}#${client.user.discriminator}${reset}`);
   
     while (true) {
-      client.channels.cache.get(faucetChannelId).send(`!faucet ${suiAddress}`);
-      console.log(`faucet initiated to ${shortSuiAddress}`);
+
+      for (let i = 0; i < faucetChannelIds.length; i++ ) {
+        client.channels.cache.get(faucetChannelIds[i]).send(`!faucet ${suiAddress}`);
+        console.log(`faucet initiated to ${cyan}${underscore}${shortSuiAddress}${reset} from cID: ${cyan}${underscore}${faucetChannelIds[i]}${reset}`);
+      }
 
       let delay = await getRandomDelay();
+      let delayStr = await parseDelay(delay);
 
-      for (let i = 0; i < delay; i++) {
-        process.stdout.write(`\r${yellow}->${reset} ${blue}${underscore}[${getDate()}]${reset} waiting ${yellow}${delay - i}${reset} seconds for next request`);
-        await timeout(1);
-      }
-      process.stdout.write('\n');
+      console.log(`waiting ${yellow}${delayStr}${reset} seconds for next request`);
+      await timeout(delay);
     }
   });
 
