@@ -37,17 +37,13 @@ const getRandomDelay = async () => {
 }
 
 const parseDelay = async (delay) => {
-  let delayHours = Math.trunc(delay/3600);
-  let delayMins = Math.trunc((delay - 7200)/60);
-  let delaySecs = delay - 7200 - (delayMins * 60);
-
-  let delayStr = `${delayHours} hrs`;
+  let delayStr = `${Math.trunc(delay/3600)} hrs`;
 
   if (delayMins != 0) {
-    delayStr += `, ${delayMins} mins`;
+    delayStr += `, ${Math.trunc((delay - 7200)/60)} mins`;
   }
   if (delaySecs != 0) {
-    delayStr += `, ${delaySecs} secs`;
+    delayStr += `, ${delay - 7200 - (delayMins * 60)} secs`;
   }
 
   return delayStr;
