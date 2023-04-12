@@ -22,7 +22,6 @@ const random = new Random();
 const client = new Client({ checkUpdate: false });
 const timeout = seconds => new Promise(res => setTimeout(res, 1000 * seconds));
 consoleStamp(console, { format: '(->).yellow :date( HH:MM:ss ).blue.underline' });
-consoleStamp(process.stdout, { format: '(->).yellow :date( HH:MM:ss ).blue.underline' });
 
 const faucetChannelIds = [
   '1037811694564560966',

@@ -9,7 +9,7 @@
     "dev": "tsc && nodemon dist/app.js",
     "lint": "eslint . --ext .ts",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "faucet": "tsc && node dist/faucet.js",
+    "faucet": "node src/faucet.js",
     "createWallets": "tsc && node dist/createWallets.js"
   },
   "keywords": [],
