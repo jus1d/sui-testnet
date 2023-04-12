@@ -38,7 +38,7 @@ const checkProxyList = async () => {
                 proxy: {
                     protocol: 'http',
                     host: ip,
-                    port: port
+                    port
                 }
             });
 
