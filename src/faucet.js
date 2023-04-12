@@ -28,6 +28,7 @@ const faucetChannelIds = [
   '1093613234084388875'
 ];
 const shortAddress = (address) => `${address.slice(0, 5)}..${address.slice(address.length - 5, address.length)}`;
+const shortChannelId = (channelId) => `${channelId.slice(0, 3)}..${channelId.slice(channelId.length - 3, channelId.length)}`;
 const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4';
 const shortSuiAddress = shortAddress(suiAddress);
 
@@ -61,7 +62,7 @@ const parseDelay = async (delay) => {
 
       for (let i = 0; i < faucetChannelIds.length; i++ ) {
         client.channels.cache.get(faucetChannelIds[i]).send(`!faucet ${suiAddress}`);
-        console.log(`faucet initiated to ${cyan}${underscore}${shortSuiAddress}${reset} from cID: ${cyan}${underscore}${faucetChannelIds[i]}${reset}`);
+        console.log(`faucet initiated to ${cyan}${underscore}${shortSuiAddress}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
       }
 
       let delay = await getRandomDelay();
