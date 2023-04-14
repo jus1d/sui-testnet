@@ -17,20 +17,22 @@ const magenta = "\x1b[35m"
 const cyan = "\x1b[36m"
 
 dotenv.config();
+console.clear();
 const client = new Client({ checkUpdate: false });
 const timeout = seconds => new Promise(res => setTimeout(res, 1000 * seconds));
 
+console.log(`${blue}\n\n\t  ██████  █    ██  ██▓   ▄▄▄█████▓▓█████   ██████ ▄▄▄█████▓ ███▄    █ ▓█████ ▄▄▄█████▓\n` +
+                        '\t▒██    ▒  ██  ▓██▒▓██▒   ▓  ██▒ ▓▒▓█   ▀ ▒██    ▒ ▓  ██▒ ▓▒ ██ ▀█   █ ▓█   ▀ ▓  ██▒ ▓▒\n' +
+                        '\t░ ▓██▄   ▓██  ▒██░▒██▒   ▒ ▓██░ ▒░▒███   ░ ▓██▄   ▒ ▓██░ ▒░▓██  ▀█ ██▒▒███   ▒ ▓██░ ▒░\n' +
+                        '\t  ▒   ██▒▓▓█  ░██░░██░   ░ ▓██▓ ░ ▒▓█  ▄   ▒   ██▒░ ▓██▓ ░ ▓██▒  ▐▌██▒▒▓█  ▄ ░ ▓██▓ ░ \n' +
+                        '\t▒██████▒▒▒▒█████▓ ░██░     ▒██▒ ░ ░▒████▒▒██████▒▒  ▒██▒ ░ ▒██░   ▓██░░▒████▒  ▒██▒ ░ \n' +
+                        '\t▒ ▒▓▒ ▒ ░░▒▓▒ ▒ ▒ ░▓       ▒ ░░   ░░ ▒░ ░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒░   ▒ ▒ ░░ ▒░ ░  ▒ ░░   \n' +
+                        '\t░ ░▒  ░ ░░░▒░ ░ ░  ▒ ░       ░     ░ ░  ░░ ░▒  ░ ░    ░    ░ ░░   ░ ▒░ ░ ░  ░    ░    \n' +
+                        '\t░  ░  ░   ░░░ ░ ░  ▒ ░     ░         ░   ░  ░  ░    ░         ░   ░ ░    ░     ░      \n' +
+                        '\t      ░     ░      ░                 ░  ░      ░                    ░    ░  ░         \n' +
+                        '\t                                                                                      \n')
 
-const introText = `${blue}\t  ██████  █    ██  ██▓   ▄▄▄█████▓▓█████   ██████ ▄▄▄█████▓ ███▄    █ ▓█████ ▄▄▄█████▓\n` +
-'\t▒██    ▒  ██  ▓██▒▓██▒   ▓  ██▒ ▓▒▓█   ▀ ▒██    ▒ ▓  ██▒ ▓▒ ██ ▀█   █ ▓█   ▀ ▓  ██▒ ▓▒\n' +
-'\t░ ▓██▄   ▓██  ▒██░▒██▒   ▒ ▓██░ ▒░▒███   ░ ▓██▄   ▒ ▓██░ ▒░▓██  ▀█ ██▒▒███   ▒ ▓██░ ▒░\n' +
-'\t  ▒   ██▒▓▓█  ░██░░██░   ░ ▓██▓ ░ ▒▓█  ▄   ▒   ██▒░ ▓██▓ ░ ▓██▒  ▐▌██▒▒▓█  ▄ ░ ▓██▓ ░ \n' +
-'\t▒██████▒▒▒▒█████▓ ░██░     ▒██▒ ░ ░▒████▒▒██████▒▒  ▒██▒ ░ ▒██░   ▓██░░▒████▒  ▒██▒ ░ \n' +
-'\t▒ ▒▓▒ ▒ ░░▒▓▒ ▒ ▒ ░▓       ▒ ░░   ░░ ▒░ ░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒░   ▒ ▒ ░░ ▒░ ░  ▒ ░░   \n' +
-'\t░ ░▒  ░ ░░░▒░ ░ ░  ▒ ░       ░     ░ ░  ░░ ░▒  ░ ░    ░    ░ ░░   ░ ▒░ ░ ░  ░    ░    \n' +
-'\t░  ░  ░   ░░░ ░ ░  ▒ ░     ░         ░   ░  ░  ░    ░         ░   ░ ░    ░     ░      \n' +
-'\t      ░     ░      ░                 ░  ░      ░                    ░    ░  ░         \n' +
-'\t                                                                                      \n'
+consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
 
 const faucetChannelIds = [
   '1037811694564560966',
@@ -42,10 +44,6 @@ const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1
 const shortSuiAddress = shortAddress(suiAddress);
 
 (async () => {
-
-  console.clear();
-  console.log('\n\n' + introText);
-  consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
   
   client.on('ready', async () => {
     console.log(`Logged in as ${cyan}${underscore}${client.user.username}#${client.user.discriminator}${reset}`);
