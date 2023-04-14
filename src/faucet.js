@@ -22,7 +22,7 @@ console.clear();
 const client = new Client({ checkUpdate: false });
 const timeout = seconds => new Promise(res => setTimeout(res, 1000 * seconds));
 
-console.log(`${blue}\n\n\t  ██████  █    ██  ██▓   ▄▄▄█████▓▓█████   ██████ ▄▄▄█████▓ ███▄    █ ▓█████ ▄▄▄█████▓\n` +
+console.log(`${blue}\n\n\t   ██████  █    ██  ██▓   ▄▄▄█████▓▓█████   ██████ ▄▄▄█████▓ ███▄    █ ▓█████ ▄▄▄█████▓\n` +
                         '\t▒██    ▒  ██  ▓██▒▓██▒   ▓  ██▒ ▓▒▓█   ▀ ▒██    ▒ ▓  ██▒ ▓▒ ██ ▀█   █ ▓█   ▀ ▓  ██▒ ▓▒\n' +
                         '\t░ ▓██▄   ▓██  ▒██░▒██▒   ▒ ▓██░ ▒░▒███   ░ ▓██▄   ▒ ▓██░ ▒░▓██  ▀█ ██▒▒███   ▒ ▓██░ ▒░\n' +
                         '\t  ▒   ██▒▓▓█  ░██░░██░   ░ ▓██▓ ░ ▒▓█  ▄   ▒   ██▒░ ▓██▓ ░ ▓██▒  ▐▌██▒▒▓█  ▄ ░ ▓██▓ ░ \n' +
@@ -81,11 +81,17 @@ const setConsoleStamp = (type) => {
 
   if (!token) {
     setConsoleStamp('error');
-    console.log(`Lof in failed. No token provided. Create .env file and set TOKEN`);
+    console.log(`Log in failed. No token provided. Create .env file and set TOKEN`);
     setConsoleStamp('log');
     return;
   }
 
-  client.login(token);
+  try {
+    await client.login(token);
+  } catch (error) {
+    setConsoleStamp('error');
+    console.log(`Log in failed. Token incorrect`);
+    return;
+  }
 
 })()
