@@ -31,6 +31,8 @@ const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1
 const shortSuiAddress = shortAddress(suiAddress);
 
 (async () => {
+
+  console.clear()
   
   client.on('ready', async () => {
     console.log(`Logged in as ${cyan}${underscore}${client.user.username}#${client.user.discriminator}${reset}`);
