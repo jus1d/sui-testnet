@@ -19,7 +19,18 @@ const cyan = "\x1b[36m"
 dotenv.config();
 const client = new Client({ checkUpdate: false });
 const timeout = seconds => new Promise(res => setTimeout(res, 1000 * seconds));
-consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
+
+
+const introText = `${blue}\t  ██████  █    ██  ██▓   ▄▄▄█████▓▓█████   ██████ ▄▄▄█████▓ ███▄    █ ▓█████ ▄▄▄█████▓\n` +
+'\t▒██    ▒  ██  ▓██▒▓██▒   ▓  ██▒ ▓▒▓█   ▀ ▒██    ▒ ▓  ██▒ ▓▒ ██ ▀█   █ ▓█   ▀ ▓  ██▒ ▓▒\n' +
+'\t░ ▓██▄   ▓██  ▒██░▒██▒   ▒ ▓██░ ▒░▒███   ░ ▓██▄   ▒ ▓██░ ▒░▓██  ▀█ ██▒▒███   ▒ ▓██░ ▒░\n' +
+'\t  ▒   ██▒▓▓█  ░██░░██░   ░ ▓██▓ ░ ▒▓█  ▄   ▒   ██▒░ ▓██▓ ░ ▓██▒  ▐▌██▒▒▓█  ▄ ░ ▓██▓ ░ \n' +
+'\t▒██████▒▒▒▒█████▓ ░██░     ▒██▒ ░ ░▒████▒▒██████▒▒  ▒██▒ ░ ▒██░   ▓██░░▒████▒  ▒██▒ ░ \n' +
+'\t▒ ▒▓▒ ▒ ░░▒▓▒ ▒ ▒ ░▓       ▒ ░░   ░░ ▒░ ░▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒░   ▒ ▒ ░░ ▒░ ░  ▒ ░░   \n' +
+'\t░ ░▒  ░ ░░░▒░ ░ ░  ▒ ░       ░     ░ ░  ░░ ░▒  ░ ░    ░    ░ ░░   ░ ▒░ ░ ░  ░    ░    \n' +
+'\t░  ░  ░   ░░░ ░ ░  ▒ ░     ░         ░   ░  ░  ░    ░         ░   ░ ░    ░     ░      \n' +
+'\t      ░     ░      ░                 ░  ░      ░                    ░    ░  ░         \n' +
+'\t                                                                                      \n'
 
 const faucetChannelIds = [
   '1037811694564560966',
@@ -32,7 +43,9 @@ const shortSuiAddress = shortAddress(suiAddress);
 
 (async () => {
 
-  console.clear()
+  console.clear();
+  console.log('\n\n' + introText);
+  consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
   
   client.on('ready', async () => {
     console.log(`Logged in as ${cyan}${underscore}${client.user.username}#${client.user.discriminator}${reset}`);
