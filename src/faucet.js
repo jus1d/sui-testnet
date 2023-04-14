@@ -3,18 +3,18 @@ import consoleStamp from 'console-stamp';
 import * as dotenv from 'dotenv';
 
 const reset = "\x1b[0m"
-const dim = "\x1b[2m"
 const underscore = "\x1b[4m"
+const dim = "\x1b[2m"
 const blink = "\x1b[5m"
 const reverse = "\x1b[7m"
 const hidden = "\x1b[8m"
 
 const red = "\x1b[31m"
+const blue = "\x1b[34m"
+const cyan = "\x1b[36m"
 const green = "\x1b[32m"
 const yellow = "\x1b[33m"
-const blue = "\x1b[34m"
 const magenta = "\x1b[35m"
-const cyan = "\x1b[36m"
 
 dotenv.config();
 console.clear();
