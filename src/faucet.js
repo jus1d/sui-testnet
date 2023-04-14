@@ -1,6 +1,7 @@
 import { Client } from 'discord.js-selfbot-v13';
 import consoleStamp from 'console-stamp';
 import * as dotenv from 'dotenv';
+import readline from 'readline';
 
 const reset = "\x1b[0m";
 const underscore = "\x1b[4m";
@@ -32,8 +33,6 @@ console.log(`${blue}\n\n\t  ██████  █    ██  ██▓   ▄�
                         '\t      ░     ░      ░                 ░  ░      ░                    ░    ░  ░         \n' +
                         `\t                                                                                      \n${reset}`)
 
-consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
-
 const faucetChannelIds = [
   '1037811694564560966',
   '1093613234084388875'
@@ -44,7 +43,17 @@ const shortChannelId = (channelId) => `${channelId.slice(0, 3)}..${channelId.sli
 const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4';
 const shortSuiAddress = shortAddress(suiAddress);
 
+const setConsoleStamp = (type) => {
+  if (type === 'log') {
+    consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
+  } else if (type === 'error') {
+    consoleStamp(console, { format: '(->).red :date(HH:MM:ss).blue.underline' });
+  }
+}
+
 (async () => {
+
+  setConsoleStamp('log');
   
   client.on('ready', async () => {
     console.log(`Logged in as ${cyan}${underscore}${client.user.username}#${client.user.discriminator}${reset}`);
@@ -55,9 +64,9 @@ const shortSuiAddress = shortAddress(suiAddress);
         let channel = client.channels.cache.get(faucetChannelIds[i]);
         
         if (!channel) {
-          consoleStamp(console, { format: '(->).red :date(HH:MM:ss).blue.underline' });
+          setConsoleStamp('error');
           console.log(`Invalid channel: ${red}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
-          consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
+          setConsoleStamp('log');
           continue;
         }
 
@@ -68,6 +77,15 @@ const shortSuiAddress = shortAddress(suiAddress);
     }
   });
 
-  client.login(process.env.TOKEN);
+  let token = process.env.TOKEN;
+
+  if (!token) {
+    setConsoleStamp('error');
+    console.log(`Lof in failed. No token provided. Create .env file and set TOKEN`);
+    setConsoleStamp('log');
+    return;
+  }
+
+  client.login(token);
 
 })()
