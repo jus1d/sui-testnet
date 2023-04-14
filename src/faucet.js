@@ -19,7 +19,7 @@ const cyan = "\x1b[36m"
 dotenv.config();
 const client = new Client({ checkUpdate: false });
 const timeout = seconds => new Promise(res => setTimeout(res, 1000 * seconds));
-consoleStamp(console, { format: '(->).yellow :date(HH:MM:ss).blue.underline' });
+consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
 
 const faucetChannelIds = [
   '1037811694564560966',
@@ -41,7 +41,9 @@ const shortSuiAddress = shortAddress(suiAddress);
         let channel = client.channels.cache.get(faucetChannelIds[i]);
         
         if (!channel) {
+          consoleStamp(console, { format: '(->).red :date(HH:MM:ss).blue.underline' });
           console.log(`Invalid channel: ${red}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
+          consoleStamp(console, { format: '(->).cyan :date(HH:MM:ss).blue.underline' });
           continue;
         }
 
