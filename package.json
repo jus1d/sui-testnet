@@ -5,11 +5,8 @@
   "type": "module",
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/app.js",
-    "dev": "tsc && nodemon dist/app.js",
-    "lint": "eslint . --ext .ts",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "faucet": "node src/faucet.js",
+    "start": "tsc && node dist/app.js",
     "createWallets": "tsc && node dist/createWallets.js"
   },
   "keywords": [],
