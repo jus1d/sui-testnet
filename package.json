@@ -1,6 +1,6 @@
 {
   "name": "sui-testnet",
-  "version": "2.1",
+  "version": "2.2",
   "description": "",
   "type": "module",
   "main": "dist/app.js",

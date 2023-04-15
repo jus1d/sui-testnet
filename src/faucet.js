@@ -40,8 +40,6 @@ const faucetChannelIds = [
 
 const shortAddress = (address) => `${address.slice(0, 5)}..${address.slice(address.length - 5, address.length)}`;
 const shortChannelId = (channelId) => `${channelId.slice(0, 3)}..${channelId.slice(channelId.length - 3, channelId.length)}`;
-const suiAddress = '0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4';
-const shortSuiAddress = shortAddress(suiAddress);
 
 const setConsoleStamp = (type) => {
   if (type === 'log') {
@@ -55,6 +53,23 @@ const setConsoleStamp = (type) => {
 
   setConsoleStamp('log');
   
+  let token = process.env.TOKEN;
+  let address = process.env.ADDRESS;
+  
+  if (!token) {
+    setConsoleStamp('error');
+    console.log(`Log in failed. No token specified. Provide token in .env file`);
+    setConsoleStamp('log');
+    return;
+  }
+  
+  if (!address) {
+    setConsoleStamp('error');
+    console.log(`No SUI address specified. Provide address in .env file`);
+    setConsoleStamp('log');
+    return;
+  }
+
   client.on('ready', async () => {
     console.log(`Logged in as ${cyan}${underscore}${client.user.username}#${client.user.discriminator}${reset}`);
   
@@ -70,21 +85,12 @@ const setConsoleStamp = (type) => {
           continue;
         }
 
-        await channel.send(`!faucet ${suiAddress}`);
+        await channel.send(`!faucet ${address}`);
 
-        console.log(`Faucet initiated to ${cyan}${underscore}${shortSuiAddress}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
+        console.log(`Faucet initiated to ${cyan}${underscore}${shortAddress(address)}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
       }
     }
   });
-
-  let token = process.env.TOKEN;
-
-  if (!token) {
-    setConsoleStamp('error');
-    console.log(`Log in failed. No token provided. Create .env file and set TOKEN`);
-    setConsoleStamp('log');
-    return;
-  }
 
   try {
     await client.login(token);
