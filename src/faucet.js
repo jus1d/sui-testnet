@@ -92,6 +92,7 @@ const setConsoleStamp = (type) => {
         } catch (error) {
           setConsoleStamp('error');
           console.log(`Faucet initiation failed for ${cyan}${underscore}${shortAddress(address)}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
+          setConsoleStamp('log');
         }
       }
     }
