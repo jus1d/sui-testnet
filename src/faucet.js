@@ -34,8 +34,8 @@ console.log(`${blue}\n\n\t ▄██████  █    ██  ██▓   ▄
                        `\t                                                                                      \n${reset}`)
 
 const faucetChannelIds = [
-  '1037811694564560966',
-  '1093613234084388875'
+  '1037811694564560966', // Official SUI faucet channel
+  '1093613234084388875' // BaySwap faucet channel
 ];
 
 const shortAddress = (address) => `${address.slice(0, 5)}..${address.slice(address.length - 5, address.length)}`;
@@ -85,9 +85,14 @@ const setConsoleStamp = (type) => {
           continue;
         }
 
-        await channel.send(`!faucet ${address}`);
-
-        console.log(`Faucet initiated to ${cyan}${underscore}${shortAddress(address)}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
+        try {
+          await channel.send(`!faucet ${address}`);
+          
+          console.log(`Faucet initiated to ${cyan}${underscore}${shortAddress(address)}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
+        } catch (error) {
+          setConsoleStamp('error');
+          console.log(`Faucet initiation failed for ${cyan}${underscore}${shortAddress(address)}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannelIds[i])}${reset}`);
+        }
       }
     }
   });

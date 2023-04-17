@@ -6,6 +6,7 @@
   "main": "dist/app.js",
   "scripts": {
     "faucet": "node src/faucet.js",
+    "swap": "tsc && node dist/swap.js",
     "start": "tsc && node dist/app.js",
     "createWallets": "tsc && node dist/createWallets.js"
   },
