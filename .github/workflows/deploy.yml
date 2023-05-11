@@ -28,7 +28,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.PROJECT_DIR }};
-            docker rm voice-gpt -f;
+            docker rm sui-testnet -f;
             git pull;
-            make build;
-            make run;
+            docker build -t sui-testnet .;
+            docker compose up -d;
