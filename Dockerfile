@@ -10,4 +10,4 @@ ENV PORT=21019
 
 EXPOSE $PORT
 
-CMD [ "npm", "run", "faucet" ]
+CMD [ "npm", "start-faucet" ]
