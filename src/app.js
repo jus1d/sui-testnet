@@ -17,7 +17,7 @@ const faucetChannels = [
   {
     name: "Official SUI faucet",
     id: "1037811694564560966",
-    network: "mainnet"
+    network: "testnet"
   },
   {
     name: "BaySwap SUI faucet",
