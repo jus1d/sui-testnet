@@ -12,6 +12,7 @@ jobs:
       - name: Install ESlint
         run: |
           npm install eslint --global;
+          npm install @typescript-eslint/eslint-plugin@latest --save-dev;
       - name: Lint JS files
         run: eslint ./src/
   deploy:
