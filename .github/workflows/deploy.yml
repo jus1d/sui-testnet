@@ -1,0 +1,33 @@
+name: Deploy Sui Testnet Bot
+on:
+  push:
+    branches: [master]
+jobs:
+  lint:
+    name: Code linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install ESlint
+        run: |
+          npm install eslint --global;
+      - name: Lint JS files
+        run: eslint ./src/
+  deploy:
+    needs: lint
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and run on remote server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ${{ secrets.PROJECT_DIR }};
+            docker rm voice-gpt -f;
+            git pull;
+            make build;
+            make run;

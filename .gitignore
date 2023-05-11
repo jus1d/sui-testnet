@@ -1,3 +1,5 @@
+config/default.json
+
 dist/
 node_modules/
 *.txt

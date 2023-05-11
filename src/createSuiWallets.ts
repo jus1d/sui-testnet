@@ -8,5 +8,4 @@ import fs from 'fs';
 
         fs.appendFileSync("mnemonic.txt", `${mnemonic}\n`, "utf8");
     }
-
 })()
