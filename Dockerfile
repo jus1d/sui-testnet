@@ -4,10 +4,12 @@ WORKDIR /app
 
 COPY . . 
 
-RUN npm ci
+COPY package.json package.json
+
+RUN npm i
 
 ENV PORT=21019
 
 EXPOSE $PORT
 
-CMD [ "npm", "start-faucet" ]
+CMD [ "npm", "run", "faucet" ]
