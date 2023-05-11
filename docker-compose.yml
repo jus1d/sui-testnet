@@ -1,0 +1,8 @@
+version: '3'
+services:
+  sui-testnet:
+    image: sui-testnet
+    container_name: sui-testnet
+    restart: always
+    ports: 
+      - 21019:21019
