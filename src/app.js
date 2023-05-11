@@ -63,9 +63,9 @@ const shortChannelId = (channelId) => `${channelId.slice(0, 3)}..${channelId.sli
         try {
           await channel.send(`!faucet ${ADDRESS}`);
                     
-          log.info(`Faucet initiated to ${cyan}${underscore}${shortAddress(ADDRESS)}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
+          log.info(`Faucet initiated to ${cyan}${underscore}${shortAddress(ADDRESS)}${reset} from channel: ${faucetChannels[i].name} [${faucetChannels[i].network}] ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
         } catch (error) {
-          log.error(`Faucet initiation failed for ${cyan}${underscore}${shortAddress(ADDRESS)}${reset} from channel: ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
+          log.error(`Faucet initiation failed for ${cyan}${underscore}${shortAddress(ADDRESS)}${reset} from channel: ${faucetChannels[i].name} [${faucetChannels[i].network}] ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
         }
       }
     }
