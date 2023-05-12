@@ -8,7 +8,6 @@ const cyan = "\x1b[36m";
 const red = "\x1b[31m";
 
 const TOKEN = config.get('token');
-const ADDRESS = config.get('address');
 const ALWAYS = true;
 
 const client = new Client({ checkUpdate: false });
@@ -17,16 +16,19 @@ const faucetChannels = [
   {
     name: "Official SUI faucet",
     id: "1037811694564560966",
+    addressTo: "0x44a101a0186aa32af57e7c0309a3938f77a08b87f1eefa782c99daf49efacde3",
     network: "testnet"
   },
   {
     name: "BaySwap SUI faucet",
     id: "1104765852093534271",
+    addressTo: "0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4",
     network: "mainnet"
   },
   {
     name: "BaySwap SUI faucet",
     id: "1093613234084388875",
+    addressTo: "0xc4ba490f7c68cb4384fb672d31337d533bbd55afc52936f833086e3dc1fd13a4",
     network: "testnet"
   }
 ];
@@ -43,11 +45,6 @@ const shortChannelId = (channelId) => `${channelId.slice(0, 3)}..${channelId.sli
     return;
   }
 
-  if (!ADDRESS) {
-    console.log(`No SUI address specified. Provide address in ${underscore}${cyan}.env${reset} file`);
-    return;
-  }
-
   client.on('ready', async () => {
     log.info(`Logged in as ${cyan}${underscore}${client.user.username}#${client.user.discriminator}${reset}`);
 
@@ -61,11 +58,11 @@ const shortChannelId = (channelId) => `${channelId.slice(0, 3)}..${channelId.sli
         }
 
         try {
-          await channel.send(`!faucet ${ADDRESS}`);
+          await channel.send(`!faucet ${faucetChannels[i].addressTo}`);
                     
-          log.info(`Faucet initiated to ${cyan}${underscore}${shortAddress(ADDRESS)}${reset} from channel: ${faucetChannels[i].name} [${faucetChannels[i].network}] ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
+          log.info(`Faucet initiated to ${cyan}${underscore}${shortAddress(faucetChannels[i].addressTo)}${reset} from channel: ${faucetChannels[i].name} [${faucetChannels[i].network}] ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
         } catch (error) {
-          log.error(`Faucet initiation failed for ${cyan}${underscore}${shortAddress(ADDRESS)}${reset} from channel: ${faucetChannels[i].name} [${faucetChannels[i].network}] ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
+          log.error(`Faucet initiation failed for ${cyan}${underscore}${shortAddress(faucetChannels[i].addressTo)}${reset} from channel: ${faucetChannels[i].name} [${faucetChannels[i].network}] ${cyan}${underscore}#${shortChannelId(faucetChannels[i].id)}${reset}`);
         }
       }
     }
